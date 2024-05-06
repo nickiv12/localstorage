@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>locStorage 1</title>  <!-- -->
+    <style>
+      #container {
+        width: 800px;
+      }
+    </style>
+  </head>
+
+<body>
+  <!-- Контейнер для всего -->
+  <section id="container">
+    <h3>Работа с localStorage</h3>
+    <p>
+      Здесь буду пробовать работу с локальным хранилищем.
+      <ol><b>Надо отработать действия:</b>
+        <li>Сохранение данных из формы в локальное хранилище. Кнопка addToLocal</li>
+        <li>Просто получение данных из локального хранилища в console. Кнопка getFromLocal</li>
+        <li>Получение данных из локального и запись их в форму. Кнопка getToForm</li>  
+        <li>Проверка видимости локальных данных на другой странице сайта и после перезагрузки.</li>
+        <li>Запись данных в форму после загрузки страницы.</li>
+      </ol>  <!-- Конец списка -->
+    </p>
+    <!-- Форма -->
+    <form>
+      <!-- Инпуты -->
+      <p><label>Имя: <input type="text" name="user" placeholder="Имя" /></label></p>
+      <p><label>Пароль: <input type="text" name="password" placeholder="*****" /></label></p>
+      
+      <!-- Кнопки упрвления -->
+      <p><button type="button" id="add">addToLocal</button></p>
+      <p><button type="button" id="get">getFromLocal</button></p>
+      <p><button type="button" id="getToForm">getToForm</button></p>
+
+    </form>  <!-- Конец формы -->
+
+    <div id="dataFromStorage">
+      <h4> Сюда записываем данные полученные из localStorage.</h4>
+      <p>
+        <span>Имя:</span><span id="usName"></span>
+        <br>
+        <span>Password:</span><span id="usPassword"></span>
+      </p>
+
+    </div>
+
+  </section>  <!-- Конец секции -->
+</body>
+  <script>
+    // Функция с обработчиками событий будет работать на странице после загрузки DOM.
+    window.addEventListener('DOMContentLoaded', functionsAfterDOMLoad);
+
+    // Определяем функцию с обработчиками событий.
+    function functionsAfterDOMLoad() {
+      
+      // 1. Отправляем данные в localStorage.
+      const addToLocal = document.getElementById('add')  // Получаем кнопку.
+      addToLocal.addEventListener('click', function() {  // Вешаем на кнопку событие
+        
+        // 1.1. --- Работаем  с данными в инпуте с именем name='user' ---
+        //    a) Получаем элемент формы с name='user'.
+        const inputUserName = document.querySelector('input[name="user"]');
+        //    b) Получаем значение записанное в инпут.
+        const userName = inputUserName.value;
+        //    c) Записываем это значение в localStorage.
+        localStorage.setItem('userName', userName);
+        // d) Смотрим в консоли, что пишем в localStorage.
+        console.log(' Пишем данные в localStorage:', userName);
+
+        // 1.2. --- Работаем  с данными в инпуте с именем name='password' ---
+        //    a) Получаем элемент формы с name='password'.
+        const inputUserPassword = document.querySelector('input[name="password"]');
+        //    b) Получаем значение записанное в инпут.
+        const userPassword = inputUserPassword.value;
+        //    c) Записываем это значение в localStorage.
+        localStorage.setItem('userPassword', userPassword);
+        // d) Смотрим в консоли, что пишем в localStorage.
+        console.log(' Пишем данные в localStorage:', userPassword);
+      });  // Конец отправки данных из формы в localStorage.
+
+      // 2.1. --- Пишем данные из localStorage просто на страницу. -----
+      //   Вешаем обработчик на кнопку getFromLocal
+      console.log('OK');
+      const getFromLocal = document.getElementById('get');
+      getFromLocal.addEventListener('click', function() {
+        //   a) Получаем html-элемент для имени и пишем в него данные
+        const uName = document.getElementById('usName');  // Получаем html.
+        console.log(localStorage.getItem('userName'));
+        uName.innerText = localStorage.getItem('userName');  // Пишем в него.
+        
+        //   b) Получаем html-элемент для пароля и пишем в него данные
+        const uPass = document.getElementById('usPassword');  // Получаем html.
+        console.log(localStorage.getItem('userPassword'));
+        uPass.innerText = localStorage.getItem('userPassword');  // Пишем в него.
+
+
+      });  // Конец записи данных из localStorage на страницу.
+
+    };
+
+  </script>
+</html>
